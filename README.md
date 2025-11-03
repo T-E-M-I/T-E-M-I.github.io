@@ -1,1 +1,222 @@
-# T-E-M-I.github.io
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mi Reina(Annie)</title>
+  <style>
+    :root{--bg:#fffafc;--accent:#d63484;--muted:#6b6b6b;--card:#ffffff;--shadow:0 8px 30px rgba(13,13,20,0.06);font-family: 'Georgia', 'Times New Roman', serif}
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0}
+    body{background:linear-gradient(180deg,var(--bg),#fff);display:flex;align-items:center;justify-content:center;padding:28px;color:#222}
+    .wrap{width:100%;max-width:900px;background:var(--card);border-radius:18px;padding:28px;box-shadow:var(--shadow);border:1px solid rgba(214,52,132,0.06)}
+    header{display:flex;align-items:center;gap:18px}
+    .logo{width:76px;height:76px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:22px;color:var(--accent);background:linear-gradient(180deg,rgba(214,52,132,0.06),rgba(214,52,132,0.03));}
+    h1{margin:0;font-size:28px}
+    p.lead{margin:6px 0 0;color:var(--muted);font-size:15px}
+
+    .grid{display:grid;grid-template-columns:1fr 320px;gap:20px;margin-top:20px}
+    .card{background:transparent;border-radius:12px;padding:18px}
+
+    .note{font-size:16px;line-height:1.7;color:#222}
+    .signature{margin-top:14px;font-weight:700;color:var(--accent)}
+
+    .messages{background:#fff;border-radius:12px;padding:18px;box-shadow:0 6px 18px rgba(14,14,20,0.03)}
+    .msg-text{min-height:110px;font-size:16px;line-height:1.6;color:#111;display:flex;align-items:center;justify-content:center;text-align:center;padding:6px}
+    .controls{display:flex;gap:10px;justify-content:center;margin-top:12px}
+    .btn{border:none;padding:10px 14px;border-radius:10px;font-weight:600;cursor:pointer}
+    .primary{background:linear-gradient(90deg,var(--accent),#ff7ab0);color:white}
+    .ghost{background:transparent;border:1px solid rgba(0,0,0,0.06)}
+
+    .meta{background:linear-gradient(180deg,#fff,#fffafc);border-radius:12px;padding:16px;text-align:center;box-shadow:0 6px 18px rgba(14,14,20,0.02)}
+    .time{font-size:20px;font-weight:700;color:var(--accent)}
+    .labels{font-size:13px;color:var(--muted);margin-top:6px}
+
+    .gallery{margin-top:14px;border-radius:10px;overflow:hidden}
+    .gallery img{width:100%;display:block}
+
+    footer{margin-top:16px;text-align:center;color:var(--muted);font-size:13px}
+
+    @media (max-width:880px){.grid{grid-template-columns:1fr}.meta{margin-top:12px}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="logo">Mi</div>
+      <div>
+        <h1>Mi Reina — Annie</h1>
+        <p class="lead">mi amor. I built this little page just for you — simple, true, and from the heart.</p>
+      </div>
+    </header>
+
+    <div class="grid">
+      <main>
+        <section class="card">
+          <div class="note">
+            <p>Love of my love —</p>
+            <p>Even miles away, you are my nearest thought. A small place on the web where you can open a message whenever i cross your mind. Click through the notes and know that every line is from my heart.</p>
+            <div class="signature">— Always, TEmi</div>
+          </div>
+
+          <div style="height:14px"></div>
+
+          <div class="messages">
+            <div id="msg" class="msg-text">Loading messages…</div>
+            <div class="controls">
+              <button id="prev" class="btn ghost">◀ Prev</button>
+              <button id="random" class="btn primary">Surprise me</button>
+              <button id="next" class="btn ghost">Next ▶</button>
+            </div>
+            <div style="text-align:center;margin-top:10px;color:var(--muted);font-size:13px">Click the buttons to read the notes </div>
+          </div>
+        </section>
+      </main>
+
+      <aside>
+        <div class="meta">
+          <div style="font-size:13px;color:var(--muted)">SOON TO BE TOGETHER </div>
+          <div class="time" id="since">2027-11-03T12:00:00</div>
+          <div class="labels">(this counts down 2 years)</div>
+
+          <div style="height:12px"></div>
+          <div class="gallery">
+            <img src="annie.jpeg" alt="My baby">
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <footer>Made with ❤.</footer>
+  </div>
+
+  <script>
+    // ---------------------------
+    // Configuration
+    // ---------------------------
+    // START_DATE will be set to exactly 2 years before now by default.
+    // If you want a specific anniversary date, replace with an ISO string e.g. '2023-11-03T12:00:00'
+    let START_DATE = null; // null means use now - 2 years
+
+    // A large list of romantic messages you can edit freely.
+    const MESSAGES = [
+      "Every day with you is my favourite day.",
+      "Distance isnt new to us",
+      "I fall for you a little more every single day.",
+      "With you, ordinary moments become precious memories.",
+      "You are my prayer answered — Alhamdulillah for you.",
+      "When I think of love, I think of you.",
+      "You are the calm to my storm and the joy to my heart.",
+      "I carry your heart with me, always.",
+      "Your laugh is my favourite sound.",
+      "I love you more than words on this page can say.",
+      "Every dua I make has a line for you.",
+      "I love the way you look at the world — with kindness and courage.",
+      "Being yours is my greatest blessing.",
+      "I promise to make your days lighter and your nights warmer.",
+      "You are the reason I believe in forever.",
+      "When we are apart, I keep your hand in my heart.",
+      "You are my compass, my comfort, my home.",
+      "I cherish your voice, your thoughts, your silence beside me.",
+      "If loving you is a journey, I’d walk it on repeat.",
+      "Your presence in my life is a beautiful mercy.",
+      "I choose you — today, tomorrow, and always.",
+      "Your happiness is the map I want to follow.",
+      "I keep a pocket of my day just for you.",
+      "Seeing you smile is the best part of my day.",
+      "I adore every piece of you, even the parts you hide.",
+      "You make my heart say Alhamdulillah every day.",
+      "I miss you in ways words get small for.",
+      "You are the answer to a thousand silent duas.",
+      "When I grow old, I want to grow old with you smiling beside me.",
+      "I love the little things you do that make life beautiful.",
+      "My favourite place will always be next to you.",
+      "I promise to protect your heart like it’s the most precious thing I own.",
+      "You taught me how to love better and to be better.",
+      "Your name is my favourite word.",
+      "Every sunset reminds me that I get to love you another day.",
+      "I will hold your hand through every storm and celebrate every sun.",
+      "You are my quiet joy and my loud laughter.",
+      "I am grateful for your patience, your warmth, your love.",
+      "If I had a flower for every time I thought of you, I could walk in my garden forever.",
+      "You are my simplest and truest happiness.",
+      "I love you beyond the limits of time and distance."
+
+    ];
+
+    // ---------------------------
+    // Message navigation
+    // ---------------------------
+    let idx = 0;
+    const msgEl = document.getElementById('msg');
+    const prevBtn = document.getElementById('prev');
+    const nextBtn = document.getElementById('next');
+    const randBtn = document.getElementById('random');
+
+    function showMessage(i){
+      idx = (i + MESSAGES.length) % MESSAGES.length;
+      msgEl.textContent = MESSAGES[idx];
+    }
+    prevBtn.addEventListener('click', ()=> showMessage(idx-1));
+    nextBtn.addEventListener('click', ()=> showMessage(idx+1));
+    randBtn.addEventListener('click', ()=> showMessage(Math.floor(Math.random()*MESSAGES.length)));
+
+    // Initialize
+    showMessage(0);
+
+    // ---------------------------
+    // Count-up timer (since 2 years ago by default)
+    // ---------------------------
+    let TARGET_DATE = null; // null means 2 years from now
+    function getTargetDate() {
+     if (TARGET_DATE) {
+         return new Date(TARGET_DATE);
+     }
+     const now = new Date();
+     const twoYearsLater = new Date(
+        now.getFullYear() + 2,
+        now.getMonth(),
+        now.getDate(),
+        now.getHours(),
+        now.getMinutes(),
+        now.getSeconds()
+     );
+    return twoYearsLater;
+    }
+
+    const target = getTargetDate();
+
+    function updateCountdown() {
+     const now = new Date();
+    let diff = Math.floor((target - now) / 1000); // seconds remaining
+
+    if (diff < 0) {
+     document.getElementById("since").textContent = "🎉 2 years completed!";
+     return;
+    }
+
+        const days = Math.floor(diff / (3600 * 24));
+        diff -= days * 3600 * 24;
+        const hours = Math.floor(diff / 3600);
+        diff -= hours * 3600;
+        const minutes = Math.floor(diff / 60);
+        const seconds = diff - minutes * 60;
+
+        const pad = (n) => String(n).padStart(2, "0");
+         document.getElementById(
+         "since"
+        ).textContent = `${days}d ${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+    // Accessibility: keyboard navigation for messages
+    document.addEventListener('keydown', (e)=>{
+      if (e.key === 'ArrowRight') nextBtn.click();
+      if (e.key === 'ArrowLeft') prevBtn.click();
+      if (e.key === 'r') randBtn.click();
+    });
+  </script>
+</body>
+</html>
++
